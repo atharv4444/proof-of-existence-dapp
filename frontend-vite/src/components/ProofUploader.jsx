@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { userSession } from './ConnectWallet';
+import { userSession } from './ConnectWallet.jsx';
 import { openContractCall } from '@stacks/connect';
 import { STACKS_TESTNET } from '@stacks/network';
-import { stringUtf8CV } from '@stacks/transactions'; // <-- IMPORTANT: This import has changed
+import { stringUtf8CV } from '@stacks/transactions';
 import axios from 'axios';
 
-// IMPORTANT: Update these with your NEW contract details from Part 1
-const contractAddress = 'ST2V0KSMZVBFZ3E4AZHCAMED3RWJKRSC9P04V2FYB'; // This is your address
-const contractName = 'proof-of-existence-v1'; // Use the NEW name you just deployed
+const contractAddress = 'ST2V0KSMZVBFZ3E4AZHCAMED3RWJKRSC9P04V2FYB';
+const contractName = 'proof-of-existence-v1';
 
 function ProofUploader() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -19,13 +18,11 @@ function ProofUploader() {
     if (!file) return;
     setSelectedFile(file);
     setStatus('Calculating hash...');
-
     try {
       const fileBuffer = await file.arrayBuffer();
       const hashBuffer = await crypto.subtle.digest('SHA-256', fileBuffer);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-
       setFileHash(hashHex);
       setStatus('');
     } catch (error) {
@@ -37,12 +34,7 @@ function ProofUploader() {
   const handleSubmitProof = async () => {
     if (!fileHash) return;
     setStatus('Submitting to blockchain...');
-
-    // This is now a simple string, which is much more reliable
-    const functionArgs = [
-      stringUtf8CV(fileHash),
-    ];
-
+    const functionArgs = [stringUtf8CV(fileHash)];
     const options = {
       contractAddress,
       contractName,
@@ -50,8 +42,8 @@ function ProofUploader() {
       functionArgs,
       network: STACKS_TESTNET,
       appDetails: {
-        name: 'Proof of Existence',
-        icon: window.location.origin + '/logo192.png',
+        name: 'Creator IP Shield',
+        icon: window.location.origin + '/vite.svg',
       },
       onFinish: async (data) => {
         setStatus(`Transaction broadcasted! TXID: ${data.txId}.`);
@@ -64,6 +56,8 @@ function ProofUploader() {
             txId: data.txId,
           });
           setStatus('Proof successfully anchored and metadata saved!');
+          // Optionally refresh page or state to show new proof
+          setTimeout(() => window.location.reload(), 2000);
         } catch (error) {
           setStatus('Error saving metadata to backend.');
           console.error(error);
@@ -73,28 +67,27 @@ function ProofUploader() {
         setStatus('Transaction rejected.');
       },
     };
-
     try {
       await openContractCall(options);
     } catch (error) {
-        console.error("Error opening contract call:", error);
-        setStatus('Error: Could not open wallet. See console for details.');
+      console.error("Error opening contract call:", error);
+      setStatus('Error: Could not open wallet. See console for details.');
     }
   };
 
   if (!userSession.isUserSignedIn()) {
-    return <p>Please connect your wallet to submit a proof.</p>;
+    return null;
   }
 
   return (
-    <div>
-      <h3>Submit a New Proof</h3>
+    <div className="card">
+      <h3>Anchor a New Proof</h3>
       <input type="file" onChange={handleFileChange} />
-      {fileHash && <p><strong>File Hash (SHA-256):</strong> {fileHash}</p>}
+      {fileHash && <p><strong>File Hash (SHA-256):</strong> <code className="monospace">{fileHash}</code></p>}
       <button onClick={handleSubmitProof} disabled={!fileHash || status.includes('Submitting')}>
         Anchor Proof on Blockchain
       </button>
-      {status && <p><i>{status}</i></p>}
+      {status && <p className="status-text">{status}</p>}
     </div>
   );
 }

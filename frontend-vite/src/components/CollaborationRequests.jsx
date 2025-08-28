@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { userSession } from './ConnectWallet';
+import { userSession } from './ConnectWallet.jsx';
 
 function CollaborationRequests() {
   const [requests, setRequests] = useState([]);
@@ -18,13 +18,14 @@ function CollaborationRequests() {
           console.error("Error fetching collaboration requests:", error);
           setIsLoading(false);
         });
+    } else {
+      setIsLoading(false);
     }
   }, [currentUserAddress]);
 
   const handleUpdateRequest = async (id, status) => {
     try {
       await axios.put(`http://localhost:3001/api/collaborations/${id}`, { status });
-      // Remove the request from the list after it's been handled
       setRequests(prevRequests => prevRequests.filter(req => req.id !== id));
       alert(`Request has been ${status.toLowerCase()}.`);
     } catch (error) {
@@ -33,28 +34,28 @@ function CollaborationRequests() {
     }
   };
 
-  if (!currentUserAddress || requests.length === 0) {
-    return null; // Don't show the component if not logged in or no requests
+  if (!userSession.isUserSignedIn() || requests.length === 0) {
+    return null;
   }
 
   if (isLoading) {
-    return <p>Loading collaboration requests...</p>;
+    return <div className="card collaboration-requests"><h2>Loading Requests...</h2></div>;
   }
 
   return (
-    <div style={{ marginTop: '40px', border: '2px solid #61dafb', padding: '15px', borderRadius: '8px' }}>
+    <div className="card collaboration-requests">
       <h2>Collaboration Requests</h2>
       {requests.map(req => (
-        <div key={req.id} style={{ marginBottom: '15px', paddingBottom: '10px', borderBottom: '1px solid #eee' }}>
+        <div key={req.id} className="proof-card">
           <p>
-            Request from <strong style={{ fontFamily: 'monospace' }}>{req.proof.creator.stacksAddress}</strong>
+            Request from <code className="monospace">{req.proof.creator.stacksAddress}</code>
             <br />
             To collaborate on file: <strong>{req.proof.fileName}</strong>
           </p>
           <button onClick={() => handleUpdateRequest(req.id, 'CONFIRMED')} style={{ marginRight: '10px' }}>
             Accept
           </button>
-          <button onClick={() => handleUpdateRequest(req.id, 'REJECTED')} style={{ backgroundColor: '#ff6666' }}>
+          <button onClick={() => handleUpdateRequest(req.id, 'REJECTED')} className="button-reject">
             Reject
           </button>
         </div>

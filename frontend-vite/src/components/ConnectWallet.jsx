@@ -1,15 +1,15 @@
 import React from 'react';
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 
-const appConfig = new AppConfig(['store_write']);
+const appConfig = new AppConfig(['store_write', 'publish_data']);
 export const userSession = new UserSession({ appConfig });
 
 function ConnectWallet() {
   const handleConnect = () => {
     showConnect({
       appDetails: {
-        name: 'Proof of Existence',
-        icon: window.location.origin + '/logo192.png',
+        name: 'Creator IP Shield',
+        icon: window.location.origin + '/vite.svg', // Vite default icon
       },
       redirectTo: '/',
       onFinish: () => {
@@ -24,10 +24,13 @@ function ConnectWallet() {
   };
 
   if (userSession.isUserSignedIn()) {
+    const userAddress = userSession.loadUserData().profile.stxAddress.testnet;
     return (
       <div>
-        <p>Logged in as: {userSession.loadUserData().profile.stxAddress.testnet}</p>
-        <button onClick={handleDisconnect}>Disconnect Wallet</button>
+        <span className="monospace" style={{ marginRight: '15px' }}>
+          {`${userAddress.substring(0, 5)}...${userAddress.substring(userAddress.length - 5)}`}
+        </span>
+        <button onClick={handleDisconnect}>Disconnect</button>
       </div>
     );
   }

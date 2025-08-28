@@ -10,15 +10,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Proof of Existence dApp</h1>
+        <h1>Creator IP Shield</h1>
         <ConnectWallet />
       </header>
       <main>
         <CollaborationRequests />
         <ProofUploader />
-        <hr style={{ margin: '40px 0', border: '1px solid #eee' }} />
         <ProofList />
-        <hr style={{ margin: '40px 0', border: '1px solid #eee' }} />
         <CreatorList />
       </main>
     </div>
