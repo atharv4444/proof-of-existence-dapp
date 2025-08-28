@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Creator {
+  id                    String             @id @default(cuid())
+  stacksAddress         String             @unique
+  username              String?
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  proofs                Proof[]
+  collaborations        Collaboration[]
+  verificationsGiven    PeerVerification[] @relation("Verifier")
+  verificationsReceived PeerVerification[] @relation("VerifiedCreator")
+}
+
+model Proof {
+  id             String          @id @default(cuid())
+  fileHash       String
+  fileName       String
+  txId           String          @unique
+  createdAt      DateTime        @default(now())
+  creator        Creator         @relation(fields: [creatorId], references: [id])
+  creatorId      String
+  collaborations Collaboration[]
+}
+
+model Collaboration {
+  id             String   @id @default(cuid())
+  status         String
+  createdAt      DateTime @default(now())
+  proof          Proof    @relation(fields: [proofId], references: [id])
+  proofId        String
+  collaborator   Creator  @relation(fields: [collaboratorId], references: [id])
+  collaboratorId String
+}
+
+model PeerVerification {
+  id                String   @id @default(cuid())
+  createdAt         DateTime @default(now())
+  verifier          Creator  @relation("Verifier", fields: [verifierId], references: [id])
+  verifierId        String
+  verifiedCreator   Creator  @relation("VerifiedCreator", fields: [verifiedCreatorId], references: [id])
+  verifiedCreatorId String
+}
