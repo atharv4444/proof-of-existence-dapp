@@ -16,10 +16,8 @@ function App() {
         <h3>Submit a New Proof</h3>
         <ProofUploader />
         <hr style={{ margin: '40px 0', border: '1px solid #eee' }} />
-        <h3>Your Anchored Proofs</h3>
         <ProofList />
         <hr style={{ margin: '40px 0', border: '1px solid #eee' }} />
-        <h3>Creator Network</h3>
         <CreatorList />
       </main>
     </div>

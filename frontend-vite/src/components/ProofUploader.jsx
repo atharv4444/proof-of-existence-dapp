@@ -86,14 +86,20 @@ function ProofUploader() {
   }
 
   return (
-    <div>
+    <div style={{ textAlign: 'center' }}>
       <h3>Submit a New Proof</h3>
-      <input type="file" onChange={handleFileChange} />
+      <div className="proof-controls">
+        <label htmlFor="file-upload" className="custom-file-upload">
+          Choose File
+        </label>
+        <input id="file-upload" type="file" onChange={handleFileChange} />
+        <p className="file-name">{selectedFile ? selectedFile.name : 'No file chosen'}</p>
+        <button onClick={handleSubmitProof} disabled={!fileHash || status.includes('Submitting')}>
+          Anchor Proof on Blockchain
+        </button>
+      </div>
       {fileHash && <p><strong>File Hash (SHA-256):</strong> {fileHash}</p>}
-      <button onClick={handleSubmitProof} disabled={!fileHash || status.includes('Submitting')}>
-        Anchor Proof on Blockchain
-      </button>
-      {status && <p><i>{status}</i></p> }
+      {status && <p><i>{status}</i></p>}
     </div>
   );
 }

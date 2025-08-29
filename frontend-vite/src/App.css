@@ -7,8 +7,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   padding: 0;
-  background-color: #f0f2f5; /* Light gray background */
-  color: #333; /* Dark text color */
+  background-color: #F2F4F7; /* Light cloud gray */
+  color: #3C4858; /* Deep charcoal */
 }
 
 /* Main app container */
@@ -21,20 +21,20 @@ body {
 
 /* Header styling */
 .App-header {
-  background-color: #fff;
+  background-color: #FFFFFF; /* Pure white */
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center horizontally */
 }
 
 .App-header h1 {
   font-size: 24px;
   margin: 0;
-  color: #1a1a1a;
+  color: #3C4858; /* Updated color */
 }
 
 /* Main content area styling */
@@ -47,7 +47,7 @@ main {
 /* Styling for the card-like sections */
 .App-header,
 main > div {
-  background-color: #fff;
+  background-color: #FFFFFF; /* Pure white */
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -55,14 +55,15 @@ main > div {
 }
 
 main > div h2, main > div h3 {
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid #E0E6ED; /* Soft gray line */
   padding-bottom: 10px;
   margin-top: 0;
+  text-align: center;
 }
 
 /* Buttons and inputs */
 button {
-  background-color: #61dafb; /* Your theme color */
+  background-color: #607D8B; /* Muted blue-gray */
   color: white;
   border: none;
   padding: 10px 15px;
@@ -73,13 +74,15 @@ button {
 }
 
 button:hover {
-  background-color: #4aabc5;
+  background-color: #526B79;
 }
 
 input[type="file"], input[type="text"] {
-  border: 1px solid #ccc;
+  border: 1px solid #E0E6ED;
   padding: 8px;
   border-radius: 5px;
+  background-color: #FFFFFF;
+  color: #3C4858;
 }
 
 /* For the proof list table */
@@ -90,6 +93,42 @@ table {
 
 th, td {
   padding: 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #E0E6ED;
   text-align: left;
+}
+
+/* Style for the centered proof section */
+.proof-controls {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Align items vertically */
+  gap: 10px; /* Space between elements */
+}
+
+/* Hide the default file input */
+input[type="file"] {
+  display: none;
+}
+
+/* Style the custom file button to look like a normal button */
+.custom-file-upload {
+  border: 1px solid #E0E6ED;
+  display: inline-block;
+  padding: 10px 15px;
+  cursor: pointer;
+  background-color: #F8F9FA;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  color: #3C4858;
+}
+
+.custom-file-upload:hover {
+  background-color: #E9ECEF;
+}
+
+.file-name {
+    font-size: 14px;
+    color: #3C4858;
+    margin: 0;
 }

@@ -1,43 +1,36 @@
-import { showConnect } from "@stacks/connect";
-
-import { userSession } from "../user-session";
-
-function authenticate() {
-  showConnect({
-    appDetails: {
-      name: "Stacks React Starter",
-      icon: window.location.origin + "/logo512.png",
-    },
-    redirectTo: "/",
-    onFinish: () => {
-      window.location.reload();
-    },
-    userSession,
-  });
-}
-
-function disconnect() {
-  userSession.signUserOut("/");
-}
+import React from 'react';
+import { userSession } from '../user-session.js';
+import { showConnect } from '@stacks/connect';
 
 const ConnectWallet = () => {
+  const handleSignIn = () => {
+    showConnect({
+      appDetails: {
+        name: 'Proof of Existence dApp',
+        icon: window.location.origin + '/logo.svg',
+      },
+      redirectTo: '/',
+    });
+  };
+
+  const handleSignOut = () => {
+    userSession.signUserOut(window.location.origin);
+  };
+
   if (userSession.isUserSignedIn()) {
+    const userData = userSession.loadUserData();
     return (
-      <div>
-        <button className="Connect" onClick={disconnect}>
-          Disconnect Wallet
-        </button>
-        <p>mainnet: {userSession.loadUserData().profile.stxAddress.mainnet}</p>
-        <p>testnet: {userSession.loadUserData().profile.stxAddress.testnet}</p>
+      <div style={{ textAlign: 'right' }}>
+        <p>Logged in as: {userData.profile.stxAddress.testnet}</p>
+        <button onClick={handleSignOut}>Disconnect Wallet</button>
       </div>
     );
   }
 
   return (
-    <button className="Connect" onClick={authenticate}>
-      Connect Wallet
-    </button>
+    <div style={{ textAlign: 'right' }}>
+      <button onClick={handleSignIn}>Connect Wallet</button>
+    </div>
   );
 };
-
 export default ConnectWallet;
