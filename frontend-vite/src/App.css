@@ -1,158 +1,95 @@
-/* General Body & Font Styles */
+/* General body and typography */
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #1a1a1a;
-  color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f2f5; /* Light gray background */
+  color: #333; /* Dark text color */
 }
 
-/* Main App Container */
+/* Main app container */
 .App {
-  text-align: center;
+  width: 100% !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
 }
 
-/* Header Styles */
+/* Header styling */
 .App-header {
-  background-color: #242424;
+  background-color: #fff;
+  border-radius: 8px;
   padding: 20px;
-  border-bottom: 1px solid #333;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .App-header h1 {
+  font-size: 24px;
   margin: 0;
-  font-size: 1.5em;
+  color: #1a1a1a;
 }
 
-/* Main Content Area */
+/* Main content area styling */
 main {
-  padding: 20px 40px;
-  max-width: 900px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-/* Card Style for each section */
-.card {
-  background-color: #242424;
-  border: 1px solid #333;
+/* Styling for the card-like sections */
+.App-header,
+main > div {
+  background-color: #fff;
   border-radius: 8px;
-  padding: 25px;
-  margin-top: 30px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: left;
 }
 
-.card h2, .card h3 {
-  margin-top: 0;
-  border-bottom: 1px solid #444;
+main > div h2, main > div h3 {
+  border-bottom: 2px solid #eee;
   padding-bottom: 10px;
+  margin-top: 0;
 }
 
-/* Button Styles */
+/* Buttons and inputs */
 button {
-  background-color: #535bf2;
+  background-color: #61dafb; /* Your theme color */
   color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 1em;
-  font-weight: 500;
-  border-radius: 8px;
+  padding: 10px 15px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.25s;
+  transition: background-color 0.3s;
+  font-size: 16px;
 }
 
 button:hover {
-  background-color: #747bff;
+  background-color: #4aabc5;
 }
 
-button:disabled {
-  background-color: #444;
-  cursor: not-allowed;
+input[type="file"], input[type="text"] {
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 5px;
 }
 
-.button-reject {
-  background-color: #c0392b;
-}
-
-.button-reject:hover {
-  background-color: #e74c3c;
-}
-
-
-/* Input Styles */
-input[type="file"] {
-  background-color: #333;
-  border-radius: 8px;
-  padding: 10px;
-}
-
-/* Table Styles */
-.data-table {
+/* For the proof list table */
+table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
 }
 
-.data-table th, .data-table td {
-  padding: 12px;
-  border-bottom: 1px solid #333;
-}
-
-.data-table th {
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
   text-align: left;
-  background-color: #333;
-}
-
-.data-table code {
-  font-family: 'Courier New', Courier, monospace;
-  background-color: #333;
-  padding: 2px 5px;
-  border-radius: 4px;
-}
-
-/* Link Styles */
-a {
-  color: #61dafb;
-  text-decoration: none;
-  transition: color 0.25s;
-}
-
-a:hover {
-  color: #82e9ff;
-}
-
-/* Utility Classes */
-.monospace {
-  font-family: 'Courier New', Courier, monospace;
-}
-
-.status-text {
-  font-style: italic;
-  color: #aaa;
-  margin-top: 15px;
-}
-
-.verified-text {
-  color: #2ecc71;
-  font-weight: bold;
-}
-
-.proof-card {
-  border: 1px solid #333;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.proof-card p {
-  margin: 5px 0;
-}
-
-.collaboration-requests {
-  border: 2px solid #535bf2;
 }

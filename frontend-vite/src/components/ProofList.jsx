@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { userSession } from './ConnectWallet.jsx';
+import { userSession } from '../user-session.js';
 
 function CollaboratorList({ proofId }) {
   const [collaborators, setCollaborators] = useState([]);
